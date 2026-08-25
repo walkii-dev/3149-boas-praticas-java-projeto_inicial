@@ -2,6 +2,8 @@ package br.com.alura.service;
 
 
 import br.com.alura.configuration.HttpClientConfiguration;
+import br.com.alura.model.Abrigo;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -9,6 +11,8 @@ import com.google.gson.JsonParser;
 
 import java.io.IOException;
 import java.net.http.HttpResponse;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class AbrigoService {
@@ -27,12 +31,12 @@ public class AbrigoService {
         HttpResponse<String> response = configuration.fazerRequisicaoGet(uri);
         String responseBody = response.body();
 
-        JsonArray jsonArray = JsonParser.parseString(responseBody).getAsJsonArray();
+        Abrigo[] prevAbrigoList = new ObjectMapper().readValue(responseBody,Abrigo[].class);
+        List<Abrigo> abrigoList = Arrays.stream(prevAbrigoList).toList();
         System.out.println("Abrigos cadastrados:");
-        for (JsonElement element : jsonArray) {
-            JsonObject jsonObject = element.getAsJsonObject();
-            long id = jsonObject.get("id").getAsLong();
-            String nome = jsonObject.get("nome").getAsString();
+        for (Abrigo abrigo : abrigoList) {
+            long id = abrigo.getId();
+            String nome = abrigo.getNome();
             System.out.println(id + " - " + nome);
         }
     }
@@ -46,12 +50,9 @@ public class AbrigoService {
 
         String uri = "http://localhost:8080/abrigos/";
 
-        JsonObject json = new JsonObject();
-        json.addProperty("nome", nome);
-        json.addProperty("telefone", telefone);
-        json.addProperty("email", email);
+        Abrigo abrigo = new Abrigo(nome, telefone, email);
 
-        HttpResponse<String> response = configuration.fazerRequisicaoPost(uri,json);
+        HttpResponse<String> response = configuration.fazerRequisicaoPost(uri, abrigo);
 
         int statusCode = response.statusCode();
         String responseBody = response.body();
