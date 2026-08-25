@@ -11,6 +11,9 @@ public class Pet {
         this.peso = peso;
     }
 
+    public Pet() {
+    }
+
     private long id;
     private String tipo;
     private String nome;

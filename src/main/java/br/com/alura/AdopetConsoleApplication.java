@@ -1,5 +1,6 @@
 package br.com.alura;
 
+import br.com.alura.configuration.HttpClientConfiguration;
 import br.com.alura.service.AbrigoService;
 import br.com.alura.service.PetService;
 import java.io.IOException;
@@ -9,8 +10,9 @@ public class AdopetConsoleApplication {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        AbrigoService abrigoService = new AbrigoService();
-        PetService petService = new PetService();
+        HttpClientConfiguration configuration = new HttpClientConfiguration();
+        AbrigoService abrigoService = new AbrigoService(configuration);
+        PetService petService = new PetService(configuration);
 
         System.out.println("##### BOAS VINDAS AO SISTEMA ADOPET CONSOLE #####");
         try {

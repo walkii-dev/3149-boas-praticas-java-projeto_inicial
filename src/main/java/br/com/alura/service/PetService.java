@@ -69,7 +69,7 @@ public class PetService {
         String line;
         while ((line = reader.readLine()) != null) {
             String[] campos = line.split(",");
-            String tipo = campos[0];
+            String tipo = campos[0].toUpperCase();
             String nome = campos[1];
             String raca = campos[2];
             int idade = Integer.parseInt(campos[3]);

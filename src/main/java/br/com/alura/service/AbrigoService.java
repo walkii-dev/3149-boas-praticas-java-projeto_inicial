@@ -17,13 +17,12 @@ import java.util.Scanner;
 
 public class AbrigoService {
 
-    private HttpClientConfiguration configuration;
-
+    private final HttpClientConfiguration configuration;
     public AbrigoService(HttpClientConfiguration configuration){
         this.configuration = configuration;
     }
 
-    public AbrigoService(){}
+
 
     public void listarAbrigos() throws IOException, InterruptedException{
         String uri = "http://localhost:8080/abrigos";
@@ -48,7 +47,7 @@ public class AbrigoService {
         System.out.println("Digite o email do abrigo:");
         String email = new Scanner(System.in).nextLine();
 
-        String uri = "http://localhost:8080/abrigos/";
+        String uri = "http://localhost:8080/abrigos";
 
         Abrigo abrigo = new Abrigo(nome, telefone, email);
 
