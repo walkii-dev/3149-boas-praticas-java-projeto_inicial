@@ -2,24 +2,12 @@ package br.com.alura;
 
 import br.com.alura.service.AbrigoService;
 import br.com.alura.service.PetService;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import javax.imageio.IIOException;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.Scanner;
 
 public class AdopetConsoleApplication {
 
-    public static void main(String[] args) throws IOException,InterruptedException {
+    public static void main(String[] args) throws IOException, InterruptedException {
 
         AbrigoService abrigoService = new AbrigoService();
         PetService petService = new PetService();
