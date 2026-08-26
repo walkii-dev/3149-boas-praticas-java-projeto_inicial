@@ -4,10 +4,6 @@ package br.com.alura.service;
 import br.com.alura.configuration.HttpClientConfiguration;
 import br.com.alura.model.Abrigo;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import java.io.IOException;
 import java.net.http.HttpResponse;
@@ -24,21 +20,30 @@ public class AbrigoService {
 
 
 
-    public void listarAbrigos() throws IOException, InterruptedException{
+    public void listarAbrigos() throws IOException, InterruptedException {
         String uri = "http://localhost:8080/abrigos";
 
         HttpResponse<String> response = configuration.fazerRequisicaoGet(uri);
         String responseBody = response.body();
 
-        Abrigo[] prevAbrigoList = new ObjectMapper().readValue(responseBody,Abrigo[].class);
+        Abrigo[] prevAbrigoList = new ObjectMapper().readValue(responseBody, Abrigo[].class);
         List<Abrigo> abrigoList = Arrays.stream(prevAbrigoList).toList();
-        System.out.println("Abrigos cadastrados:");
-        for (Abrigo abrigo : abrigoList) {
-            long id = abrigo.getId();
-            String nome = abrigo.getNome();
-            System.out.println(id + " - " + nome);
+
+        if (abrigoList.isEmpty()) {
+            System.out.println("Não há abrigos cadastrados.");
+        } else {
+            mostrarAbrigos(abrigoList);
         }
     }
+        private void mostrarAbrigos(List<Abrigo> abrigos){
+            System.out.println("Abrigos cadastrados:");
+            for (Abrigo abrigo : abrigos) {
+                long id = abrigo.getId();
+                String nome = abrigo.getNome();
+                System.out.println(id + " - " + nome);
+            }
+        }
+
     public void cadastrarAbrigo() throws IOException,InterruptedException {
         System.out.println("Digite o nome do abrigo:");
         String nome = new Scanner(System.in).nextLine();
