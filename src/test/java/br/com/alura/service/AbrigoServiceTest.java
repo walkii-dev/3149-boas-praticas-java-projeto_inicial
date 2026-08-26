@@ -32,19 +32,24 @@ public class AbrigoServiceTest {
         String expectedAbrigosCadastrados = "Abrigos cadastrados:";
         String expectedIdAndName = "0 - Teste";
 
+        // identificar as informações no sistema
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream printStream  = new PrintStream(baos);
         System.setOut(printStream);
 
+        //situacional para retornar as informações manipuladas
         when(response.body()).thenReturn("[{"+abrigo.toString()+"}]");
         when(configuration.fazerRequisicaoGet(anyString())).thenReturn(response);
 
+        //teste do metodo em si
         abrigoService.listarAbrigos();
 
+        // buscar informações no sistema
         String[] lines = baos.toString().split(System.lineSeparator());
         String actualAbrigosCadastrados = lines[0];
         String actualIdAndNome = lines[1];
 
+        //faz a 'condicional de testes' para que os casos estejam corretos
         Assertions.assertEquals(expectedAbrigosCadastrados,actualAbrigosCadastrados);
         Assertions.assertEquals(expectedIdAndName,actualIdAndNome);
     }
