@@ -25,7 +25,7 @@ public class AbrigoServiceTest {
     private Abrigo abrigo = new Abrigo("Teste","21983177667","abrigo_teste@gmail.com");
 
     @Test
-    public void mustVerifyIfDoGetRequestBeCalled() throws IOException, InterruptedException {
+    public void mustShowAbrigosList() throws IOException, InterruptedException {
         abrigo.setId(0l);
 
         // resultados que devem ser esperados de ocorrer neste teste
@@ -52,5 +52,23 @@ public class AbrigoServiceTest {
         //faz a 'condicional de testes' para que os casos estejam corretos
         Assertions.assertEquals(expectedAbrigosCadastrados,actualAbrigosCadastrados);
         Assertions.assertEquals(expectedIdAndName,actualIdAndNome);
+    }
+    @Test
+    public void mustNotShowAbrigosList() throws IOException, InterruptedException {
+        String expectedAbrigosCadastrados = "Não há abrigos cadastrados.";
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream printStream  = new PrintStream(baos);
+        System.setOut(printStream);
+
+        when(response.body()).thenReturn("[]");
+        when(configuration.fazerRequisicaoGet(anyString())).thenReturn(response);
+
+        abrigoService.listarAbrigos();
+
+        String[] lines = baos.toString().split(System.lineSeparator());
+        String actualAbrigosCadastrados = lines[0];
+
+        Assertions.assertEquals(expectedAbrigosCadastrados,actualAbrigosCadastrados);
     }
 }
