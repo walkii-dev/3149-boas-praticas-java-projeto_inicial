@@ -1,18 +1,18 @@
 package br.com.alura;
 
-import br.com.alura.configuration.HttpClientConfiguration;
-import br.com.alura.service.AbrigoService;
-import br.com.alura.service.PetService;
-import java.io.IOException;
+import br.com.alura.service.*;
+import br.com.alura.service.commands.CadastrarNovoAbrigoCommand;
+import br.com.alura.service.commands.ImportarPetsAbrigoCommand;
+import br.com.alura.service.commands.ListarAbrigoCommand;
+import br.com.alura.service.commands.ListarPetsAbrigoCommand;
+
 import java.util.Scanner;
 
 public class AdopetConsoleApplication {
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) {
 
-        HttpClientConfiguration configuration = new HttpClientConfiguration();
-        AbrigoService abrigoService = new AbrigoService(configuration);
-        PetService petService = new PetService(configuration);
+        AbrigoService.CommandExecutor executor = new AbrigoService.CommandExecutor();
 
         System.out.println("##### BOAS VINDAS AO SISTEMA ADOPET CONSOLE #####");
         try {
@@ -28,19 +28,13 @@ public class AdopetConsoleApplication {
                 String textoDigitado = new Scanner(System.in).nextLine();
                 opcaoEscolhida = Integer.parseInt(textoDigitado);
 
-                if (opcaoEscolhida == 1) {
-                    abrigoService.listarAbrigos();
-                } else if (opcaoEscolhida == 2) {
-                    abrigoService.cadastrarAbrigo();
-                } else if (opcaoEscolhida == 3) {
-                    petService.listarPets();
-                } else if (opcaoEscolhida == 4) {
-                    petService.importarPets();
-                } else if (opcaoEscolhida == 5) {
-                    break;
-                } else {
-                    System.out.println("NÚMERO INVÁLIDO!");
-                    opcaoEscolhida = 0;
+                switch (opcaoEscolhida){
+                    case 1 -> executor.executeCommand(new ListarAbrigoCommand());
+                    case 2 -> executor.executeCommand(new CadastrarNovoAbrigoCommand());
+                    case 3 -> executor.executeCommand(new ListarPetsAbrigoCommand());
+                    case 4 -> executor.executeCommand(new ImportarPetsAbrigoCommand());
+                    case 5 -> System.exit(0);
+                    default -> System.out.println("Opção Inválida.");
                 }
             }
             System.out.println("Finalizando o programa...");

@@ -1,8 +1,5 @@
 package br.com.alura.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Abrigo {
 
     public Abrigo (String nome, String telefone, String email) {

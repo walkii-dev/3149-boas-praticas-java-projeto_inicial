@@ -3,10 +3,6 @@ package br.com.alura.service;
 import br.com.alura.configuration.HttpClientConfiguration;
 import br.com.alura.model.Pet;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -98,3 +94,4 @@ public class PetService {
         reader.close();
     }
 }
+

@@ -3,6 +3,7 @@ package br.com.alura.service;
 
 import br.com.alura.configuration.HttpClientConfiguration;
 import br.com.alura.model.Abrigo;
+import br.com.alura.service.commands.Command;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -70,4 +71,10 @@ public class AbrigoService {
     }
 
 
+    public static class CommandExecutor {
+
+        public void executeCommand (Command command){
+            command.execute();
+        }
+    }
 }
